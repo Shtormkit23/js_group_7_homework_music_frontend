@@ -17,9 +17,9 @@ const Albums = (props) => {
     return (
         <Grid container direction="column" spacing={2}>
             <Grid item container direction="row" justify="space-between" alignItems="center">
-                {/*<Grid item>*/}
-                {/*    {albums[0].artist && <h2>{albums[0].artist.name}</h2>}*/}
-                {/*</Grid>*/}
+                <Grid item>
+                    {albums.length !== 0 && <h2>{albums[0].artist.name}</h2>}
+                </Grid>
             </Grid>
             <Grid item container direction="row" spacing={2}>
                 {albums.map(album => {
