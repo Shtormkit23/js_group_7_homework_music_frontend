@@ -1,6 +1,5 @@
 import React, {useEffect} from "react";
 import {Grid} from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
 import {useDispatch, useSelector} from "react-redux";
 import TrackCard from "../../components/TrackCard/TrackCard";
 import {fetchTracks} from "../../store/actions/musicActions";
@@ -18,9 +17,10 @@ const Tracks = (props) => {
         <Grid container direction="column" spacing={2}>
             <Grid item container direction="row" justify="space-between" alignItems="center">
                 <Grid item>
-                    <Typography variant="h4">
-
-                    </Typography>
+                    <Grid item>
+                        {tracks.length !== 0 && <h2>{tracks[0].album.artist.name}</h2>}
+                        {tracks.length !== 0 && <h2>{tracks[0].album.title}</h2>}
+                    </Grid>
                 </Grid>
             </Grid>
             <Grid item container direction="row" spacing={2}>
