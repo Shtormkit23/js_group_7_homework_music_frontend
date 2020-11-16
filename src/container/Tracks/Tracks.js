@@ -18,8 +18,8 @@ const Tracks = (props) => {
             <Grid item container direction="row" justify="space-between" alignItems="center">
                 <Grid item>
                     <Grid item>
-                        {tracks.length !== 0 && <h2>{tracks[0].album.artist.name}</h2>}
-                        {tracks.length !== 0 && <h2>{tracks[0].album.title}</h2>}
+                        {tracks.length !== 0 && <p className="rainbow-animated">{tracks[0].album.artist.name}</p>}
+                        {tracks.length !== 0 && <p className="rainbow-animated">{tracks[0].album.title}</p>}
                     </Grid>
                 </Grid>
             </Grid>
