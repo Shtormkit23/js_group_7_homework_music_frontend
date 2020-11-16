@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 
 .button-4 {
     text-decoration: none;
@@ -12,6 +13,13 @@
     background: #3f51b5;
     box-shadow: 0 0 1px rgba(0, 0, 0, 0);
     border-radius: 2px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.button-4:active{
+    background: #4169E1;
 }
 
 .button-4:before {
@@ -33,4 +41,11 @@
 
 .MuiListItem-root{
     width: 1000px;
+}
+
+.rainbow-animated {
+    color: #000;
+    font-size: 40px;
+    line-height: 25px;
+    font-family: 'Indie Flower', cursive;
 }
