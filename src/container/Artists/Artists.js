@@ -1,6 +1,5 @@
 import React, {useEffect} from "react";
 import {Grid} from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
 import {useDispatch, useSelector} from "react-redux";
 import ArtistCard from "../../components/ArtistCard/ArtistCard";
 import {fetchArtists} from "../../store/actions/musicActions";
@@ -17,9 +16,9 @@ const Artists = () => {
         <Grid container direction="column" spacing={2}>
             <Grid item container direction="row" justify="space-between" alignItems="center">
                 <Grid item>
-                    <Typography variant="h4">
+                    <p className="rainbow-animated">
                         Artists
-                    </Typography>
+                    </p>
                 </Grid>
             </Grid>
             <Grid item container direction="row" spacing={2}>
