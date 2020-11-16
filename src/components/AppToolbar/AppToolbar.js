@@ -5,6 +5,8 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import {Link} from "react-router-dom";
 import Container from "@material-ui/core/Container";
+import UserMenu from "../Menu/UserMenu";
+import AnonymousMenu from "../Menu/AnonymousMenu";
 
 const useStyles = makeStyles(theme => ({
   mainLink: {
@@ -27,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const AppToolbar = () => {
+const AppToolbar = ({user}) => {
   const classes = useStyles();
   return (
     <>
@@ -37,6 +39,10 @@ const AppToolbar = () => {
             <Typography variant="h6" className={classes.title}>
               <Link to="/" className={classes.mainLink}>Music</Link>
             </Typography>
+            {user ?
+                <UserMenu user={user}/>
+                : <AnonymousMenu/>
+            }
           </Container>
         </Toolbar>
       </AppBar>
