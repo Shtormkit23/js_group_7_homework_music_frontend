@@ -1,9 +1,15 @@
-import {FETCH_ALBUMS_SUCCESS, FETCH_ARTISTS_SUCCESS, FETCH_TRACKS_SUCCESS} from "../actionTypes";
+import {
+  FETCH_ALBUMS_SUCCESS,
+  FETCH_ARTISTS_SUCCESS,
+  FETCH_FAILURE,
+  FETCH_TRACKS_SUCCESS,
+} from "../actionTypes";
 
 const initialState = {
   artists: [],
   albums: [],
-  tracks: []
+  tracks: [],
+  error: null
 };
 
 const musicReducer = (state = initialState, action) => {
@@ -14,6 +20,8 @@ const musicReducer = (state = initialState, action) => {
       return {...state, albums: action.albums};
     case FETCH_TRACKS_SUCCESS:
       return {...state, tracks: action.tracks};
+    case FETCH_FAILURE:
+      return {...state, error: action.error};
     default:
       return state;
   }
