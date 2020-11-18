@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 20
     },
     artist: {
-        width: "100px",
+        width: "140px",
         marginRight: "20px",
         fontFamily: "Indie Flower",
         fontSize: 30
