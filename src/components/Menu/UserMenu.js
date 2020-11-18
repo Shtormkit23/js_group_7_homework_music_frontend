@@ -4,6 +4,8 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import {makeStyles} from "@material-ui/core/styles";
 import {NavLink} from "react-router-dom";
+import {logoutUser} from "../../store/actions/usersActions";
+import {useDispatch} from "react-redux";
 
 
 const useStyles = makeStyles(theme => ({
@@ -13,6 +15,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const UserMenu = ({user}) => {
+    const dispatch = useDispatch();
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -23,6 +26,11 @@ const UserMenu = ({user}) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const logout = () => {
+        dispatch(logoutUser());
+    };
+
     return (
         <>
             <Button
@@ -43,7 +51,7 @@ const UserMenu = ({user}) => {
             >
                 <MenuItem>Profile</MenuItem>
                 <MenuItem>My account</MenuItem>
-                <MenuItem>Logout</MenuItem>
+                <MenuItem onClick={logout}>Logout</MenuItem>
             </Menu>
         </>
     );
