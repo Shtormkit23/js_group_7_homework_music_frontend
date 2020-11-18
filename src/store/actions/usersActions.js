@@ -1,5 +1,11 @@
 import {push} from "connected-react-router";
-import {LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, REGISTER_USER_FAILURE, REGISTER_USER_SUCCESS} from "../actionTypes";
+import {
+    LOGIN_USER_FAILURE,
+    LOGIN_USER_SUCCESS,
+    LOGOUT_USER,
+    REGISTER_USER_FAILURE,
+    REGISTER_USER_SUCCESS
+} from "../actionTypes";
 import axios from "../../axiosApi";
 
 const registerUserSuccess = () => {
@@ -42,5 +48,16 @@ export const loginUser = userData => {
         } catch (e) {
             dispatch(loginUserFailure(e.response.data));
         }
+    };
+};
+
+export const logoutUser = () => {
+    return async (dispatch, getState) => {
+        const token = getState().users.user.token;
+        const headers = {'Authorization': token};
+
+        await axios.delete("/users/sessions", {headers});
+        dispatch({type: LOGOUT_USER});
+        dispatch(push("/"));
     };
 };
