@@ -28,6 +28,7 @@ const Artists = () => {
                         id={artist._id}
                         name={artist.name}
                         image={artist.image}
+                        published={artist.published}
                     />
                 })}
             </Grid>

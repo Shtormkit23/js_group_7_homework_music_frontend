@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -12,6 +12,7 @@ import {apiURL} from "../../constants";
 import {NavLink} from "react-router-dom";
 import moment from "moment"
 import ListItemText from "@material-ui/core/ListItemText";
+import {useSelector} from "react-redux";
 
 
 const useStyles = makeStyles({
@@ -25,14 +26,15 @@ const useStyles = makeStyles({
     }
 });
 
-const AlbumCard = ({id, title, image, year_of_issue})   => {
+const AlbumCard = ({id, title, image, year_of_issue, path, published}) => {
     const classes = useStyles();
+    let user = useSelector(state => state.users.user);
     let cardImage = imageNotAvailable;
     if (image) {
         cardImage = apiURL + "/uploads/" + image;
     }
     const date = moment(year_of_issue).format('YYYY');
-
+    console.log(published)
     return (
         <Card className={classes.root}>
             <CardActionArea id={id}>
@@ -54,6 +56,17 @@ const AlbumCard = ({id, title, image, year_of_issue})   => {
             </CardActionArea>
             <CardActions>
                 <NavLink exact to={`/tracks?album=${id}`} className="button-4"><span>Learn More</span></NavLink>
+                {
+                    path && path.location.pathname === "/moderation" &&
+                    <>
+                        <button className="button-4"><span>Delete item</span></button>
+                    </>
+                }
+                {
+                    user && user.role === "admin" && published !== true ?
+                        <button className="button-4"><span>Published</span></button>
+                        : null
+                }
             </CardActions>
         </Card>
     );

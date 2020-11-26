@@ -29,6 +29,7 @@ const Albums = (props) => {
                         title={album.title}
                         image={album.image}
                         year_of_issue={album.year_of_issue}
+                        published={album.published}
                     />
                 })}
             </Grid>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -11,7 +11,8 @@ import PropTypes from "prop-types";
 import {apiURL} from "../../constants";
 import {NavLink} from "react-router-dom";
 import "./ArtistCard.css";
-
+import {useDispatch, useSelector} from "react-redux";
+import {deleteArtist} from "../../store/actions/musicActions";
 
 const useStyles = makeStyles({
     root: {
@@ -24,8 +25,12 @@ const useStyles = makeStyles({
     }
 });
 
-const ArtistCard = ({id, name, image})   => {
+
+const ArtistCard = ({id, name, image, published, path})   => {
     const classes = useStyles();
+    let user = useSelector(state => state.users.user);
+    const dispatch = useDispatch();
+
     let cardImage = imageNotAvailable;
     if (image) {
         cardImage = apiURL + "/uploads/" + image;
@@ -48,7 +53,16 @@ const ArtistCard = ({id, name, image})   => {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <NavLink exact to={`/albums?artist=${id}`}  className="button-4"><span>Learn More</span></NavLink>
+                    <NavLink exact to={`/albums?artist=${id}`}  className="button-4"><span>Learn More</span></NavLink>
+                {
+                    path && path.location.pathname === "/moderation" && user && user.role === "admin" &&
+                    <button className="button-4" onClick={() => dispatch(deleteArtist(id))}><span>Delete item</span></button>
+                }
+                {
+                    user && user.role === "admin" && published !== true ?
+                        <button className="button-4"><span>Published</span></button>
+                        : null
+                }
             </CardActions>
         </Card>
     );

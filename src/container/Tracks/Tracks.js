@@ -31,6 +31,7 @@ const Tracks = (props) => {
                         title={track.title}
                         duration={track.duration}
                         number={track.number}
+                        published={track.published}
                     />
                 })}
             </Grid>

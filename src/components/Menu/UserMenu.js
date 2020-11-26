@@ -6,6 +6,8 @@ import {makeStyles} from "@material-ui/core/styles";
 import {NavLink} from "react-router-dom";
 import {logoutUser} from "../../store/actions/usersActions";
 import {useDispatch} from "react-redux";
+import ArtistCreationForm from "../AdditionForms/ArtistCreationForm";
+import Grid from "@material-ui/core/Grid";
 
 
 const useStyles = makeStyles(theme => ({
@@ -49,8 +51,13 @@ const UserMenu = ({user}) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem>Profile</MenuItem>
-                <MenuItem>My account</MenuItem>
+                <MenuItem><NavLink to="/new_artist">Add artist</NavLink></MenuItem>
+                <MenuItem><NavLink to="/new_album">Add album</NavLink></MenuItem>
+                <MenuItem><NavLink to="/new_track">Add track</NavLink></MenuItem>
+                {
+                    user && user.role === "admin" &&
+                    <MenuItem><NavLink to="/moderation">Moderation</NavLink></MenuItem>
+                }
                 <MenuItem onClick={logout}>Logout</MenuItem>
             </Menu>
         </>

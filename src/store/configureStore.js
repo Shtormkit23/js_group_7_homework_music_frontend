@@ -6,6 +6,7 @@ import trackHistoryReducer from "./reducers/trackHistoryReducer";
 import {connectRouter, routerMiddleware} from "connected-react-router";
 import thunkMiddleware from "redux-thunk";
 import {loadFromLocalStorage, saveToLocalStorage} from "./localStorage";
+import adminReducer from "./reducers/adminReducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     music: musicReducer,
     users: usersReducer,
     history: trackHistoryReducer,
+    admin: adminReducer,
     router: connectRouter(history)
 });
 

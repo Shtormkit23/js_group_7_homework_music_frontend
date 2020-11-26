@@ -9,7 +9,7 @@ import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import PropTypes from "prop-types";
 import {useDispatch, useSelector} from "react-redux";
 import {addTrackToHistory} from "../../store/actions/trackHistoryActions";
-
+import {NavLink} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -46,11 +46,11 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const TrackCard = ({id,title,duration,number}) => {
+const TrackCard = ({id,title,duration,number, path, published}) => {
     const classes = useStyles();
-    let userName = useSelector(state => state.users.user);
+    let user = useSelector(state => state.users.user);
     const dispatch = useDispatch();
-
+    console.log(published)
     return (
         <div className={classes.root}>
             <Grid container spacing={2}>
@@ -66,9 +66,24 @@ const TrackCard = ({id,title,duration,number}) => {
                                     <p className={classes.number}>{number}</p>
                                     <p className={classes.text}>{title}</p>
                                     <p className={classes.duration}>{duration}</p>
-                                    {userName ?
+                                    {user && user.role === "user" ?
                                         <button className="button-4" onClick={() => dispatch(addTrackToHistory(id))}><span>Add Track To History</span></button>
                                         : null
+                                    }
+                                    {
+                                        path && path.location.pathname !== "/moderation" &&
+                                        <NavLink exact to={`/tracks?album=${id}`} className="button-4"><span>Learn More</span></NavLink>
+                                    }
+                                    {
+                                        user && user.role === "admin" && published !== true ?
+                                        <button className="button-4"><span>Published</span></button>
+                                            : null
+                                    }
+                                    {
+                                        user && user.role === "admin" &&
+                                        <Grid item>
+                                            <button className="button-4"><span>Delete item</span></button>
+                                        </Grid>
                                     }
                                 </ListItem>
                         </List>
