@@ -1,13 +1,15 @@
 import React from "react";
-import {Button} from "@material-ui/core";
+import {Button, ListItemAvatar} from "@material-ui/core";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import {makeStyles} from "@material-ui/core/styles";
 import {NavLink} from "react-router-dom";
 import {logoutUser} from "../../store/actions/usersActions";
 import {useDispatch} from "react-redux";
-import ArtistCreationForm from "../AdditionForms/ArtistCreationForm";
-import Grid from "@material-ui/core/Grid";
+import Avatar from "@material-ui/core/Avatar";
+import imageNotAvailable from "../../download.png";
+import {apiURL} from "../../constants";
+
 
 
 const useStyles = makeStyles(theme => ({
@@ -33,15 +35,26 @@ const UserMenu = ({user}) => {
         dispatch(logoutUser());
     };
 
+    let avatarImage = imageNotAvailable;
+    if (user.avatarImage) {
+        avatarImage = apiURL + "/uploads/" + user.avatarImage;
+    }
+    if (user.facebookImage) {
+        avatarImage = user.facebookImage;
+    }
+
     return (
         <>
+            <ListItemAvatar>
+                <Avatar src={avatarImage} />
+            </ListItemAvatar>
             <Button
                 aria-controls="simple-menu"
                 aria-haspopup="true"
                 onClick={handleClick}
                 className={classes.dropDownBtn}
             >
-                Hello, {user.username}
+                Hello, {user.displayName ? user.displayName : user.username}
             </Button>
             <Button component={NavLink} to="/track_history" color="inherit">Track History</Button>
             <Menu
