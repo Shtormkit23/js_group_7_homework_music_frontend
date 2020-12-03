@@ -1,10 +1,7 @@
 import axios from "../../axiosApi";
 import {
-    CREATE_ALBUM_FAILURE,
     CREATE_ALBUM_SUCCESS,
-    CREATE_ARTIST_FAILURE,
     CREATE_ARTIST_SUCCESS,
-    CREATE_TRACK_FAILURE,
     CREATE_TRACK_SUCCESS,
     FETCH_ALBUMS_SUCCESS,
     FETCH_ARTISTS_SUCCESS,
@@ -37,20 +34,9 @@ const createAlbumSuccess = () => {
     return {type: CREATE_ALBUM_SUCCESS};
 };
 
-export const createArtistFailure = error => {
-    return {type: CREATE_ARTIST_FAILURE, error};
-};
-
-export const createAlbumFailure = error => {
-    return {type: CREATE_ALBUM_FAILURE, error};
-};
 
 const createTrackSuccess = () => {
     return {type: CREATE_TRACK_SUCCESS};
-};
-
-export const createTrackFailure = error => {
-    return {type: CREATE_TRACK_FAILURE, error};
 };
 
 export const fetchArtists = () => {
@@ -118,7 +104,11 @@ export const createArtist = artistData => {
             dispatch(createArtistSuccess());
             dispatch(push("/"));
         } catch (e) {
-            dispatch(createArtistFailure(e.response.data));
+            if (e.response && e.response.data) {
+                dispatch(fetchFailure(e.response.data));
+            } else {
+                dispatch(fetchFailure({global: "No internet"}));
+            }
         }
     };
 };
@@ -132,7 +122,11 @@ export const createAlbum = albumData => {
             dispatch(createAlbumSuccess());
             dispatch(push("/"));
         } catch (e) {
-            dispatch(createAlbumFailure(e.response.data));
+            if (e.response && e.response.data) {
+                dispatch(fetchFailure(e.response.data));
+            } else {
+                dispatch(fetchFailure({global: "No internet"}));
+            }
         }
     };
 };
@@ -146,7 +140,11 @@ export const createTrack = trackData => {
             dispatch(createTrackSuccess());
             dispatch(push("/"));
         } catch (e) {
-            dispatch(createTrackFailure(e));
+            if (e.response && e.response.data) {
+                dispatch(fetchFailure(e.response.data));
+            } else {
+                dispatch(fetchFailure({global: "No internet"}));
+            }
         }
     };
 };
