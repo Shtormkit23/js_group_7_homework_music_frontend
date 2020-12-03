@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -12,7 +12,7 @@ import {apiURL} from "../../constants";
 import {NavLink} from "react-router-dom";
 import "./ArtistCard.css";
 import {useDispatch, useSelector} from "react-redux";
-import {deleteArtist} from "../../store/actions/musicActions";
+import {deleteItem, publish} from "../../store/actions/adminActions";
 
 const useStyles = makeStyles({
     root: {
@@ -28,8 +28,8 @@ const useStyles = makeStyles({
 
 const ArtistCard = ({id, name, image, published, path})   => {
     const classes = useStyles();
-    let user = useSelector(state => state.users.user);
     const dispatch = useDispatch();
+    let user = useSelector(state => state.users.user);
 
     let cardImage = imageNotAvailable;
     if (image) {
@@ -53,14 +53,17 @@ const ArtistCard = ({id, name, image, published, path})   => {
                 </CardContent>
             </CardActionArea>
             <CardActions>
+                {
+                    published === true &&
                     <NavLink exact to={`/albums?artist=${id}`}  className="button-4"><span>Learn More</span></NavLink>
+                }
                 {
                     path && path.location.pathname === "/moderation" && user && user.role === "admin" &&
-                    <button className="button-4" onClick={() => dispatch(deleteArtist(id))}><span>Delete item</span></button>
+                    <button className="button-4" onClick={() => dispatch(deleteItem("artists",id))}><span>Delete item</span></button>
                 }
                 {
                     user && user.role === "admin" && published !== true ?
-                        <button className="button-4"><span>Published</span></button>
+                        <button className="button-4" onClick={() => dispatch(publish("artists",id))}><span>Published</span></button>
                         : null
                 }
             </CardActions>
