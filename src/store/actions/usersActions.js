@@ -61,3 +61,16 @@ export const logoutUser = () => {
         dispatch(push("/"));
     };
 };
+
+export const facebookLogin = data => {
+    return async dispatch => {
+        try {
+            const response = await axios.post("/users/facebookLogin", data);
+            dispatch(loginUserSuccess(response.data));
+            dispatch(push("/"));
+        } catch (e) {
+            dispatch(loginUserFailure(e.response.data));
+        }
+
+    };
+};
