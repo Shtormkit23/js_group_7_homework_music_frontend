@@ -9,7 +9,7 @@ import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import PropTypes from "prop-types";
 import {useDispatch, useSelector} from "react-redux";
 import {addTrackToHistory} from "../../store/actions/trackHistoryActions";
-import {NavLink} from "react-router-dom";
+import {deleteItem, publish} from "../../store/actions/adminActions";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
         margin: "0px auto"
     },
     text: {
-        width: "700px",
+        width: "400px",
         fontSize: 20
     },
     number: {
@@ -41,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
     },
     avatar: {
         backgroundColor: "#3f51b5"
+    },
+    buttonsBlock: {
+        minWidth: "422px"
     }
 }));
 
@@ -50,7 +53,7 @@ const TrackCard = ({id,title,duration,number, path, published}) => {
     const classes = useStyles();
     let user = useSelector(state => state.users.user);
     const dispatch = useDispatch();
-    console.log(published)
+
     return (
         <div className={classes.root}>
             <Grid container spacing={2}>
@@ -66,25 +69,20 @@ const TrackCard = ({id,title,duration,number, path, published}) => {
                                     <p className={classes.number}>{number}</p>
                                     <p className={classes.text}>{title}</p>
                                     <p className={classes.duration}>{duration}</p>
-                                    {user && user.role === "user" ?
+                                    <Grid className={classes.buttonsBlock}>
+                                    {user &&
                                         <button className="button-4" onClick={() => dispatch(addTrackToHistory(id))}><span>Add Track To History</span></button>
-                                        : null
-                                    }
-                                    {
-                                        path && path.location.pathname !== "/moderation" &&
-                                        <NavLink exact to={`/tracks?album=${id}`} className="button-4"><span>Learn More</span></NavLink>
                                     }
                                     {
                                         user && user.role === "admin" && published !== true ?
-                                        <button className="button-4"><span>Published</span></button>
+                                        <button className="button-4"  onClick={() => dispatch(publish("tracks",id))}><span>Published</span></button>
                                             : null
                                     }
-                                    {
-                                        user && user.role === "admin" &&
-                                        <Grid item>
-                                            <button className="button-4"><span>Delete item</span></button>
-                                        </Grid>
-                                    }
+                                        {
+                                            path && path.location.pathname === "/moderation" && user && user.role === "admin" &&
+                                            <button className="button-4" onClick={() => dispatch(deleteItem("tracks",id))}><span>Delete item</span></button>
+                                        }
+                                    </Grid>
                                 </ListItem>
                         </List>
                     </div>
