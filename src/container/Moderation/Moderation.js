@@ -12,9 +12,6 @@ const Moderation = (props) => {
     const albums = useSelector(state => state.admin.albums);
     const tracks = useSelector(state => state.admin.tracks);
 
-    console.log(albums)
-    console.log(artists)
-
     useEffect(() => {
         dispatch(fetchAllArtists());
         dispatch(fetchAllAlbums());
