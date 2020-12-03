@@ -12,7 +12,8 @@ import {apiURL} from "../../constants";
 import {NavLink} from "react-router-dom";
 import moment from "moment"
 import ListItemText from "@material-ui/core/ListItemText";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {deleteItem, publish} from "../../store/actions/adminActions";
 
 
 const useStyles = makeStyles({
@@ -28,13 +29,14 @@ const useStyles = makeStyles({
 
 const AlbumCard = ({id, title, image, year_of_issue, path, published}) => {
     const classes = useStyles();
+    const dispatch = useDispatch();
     let user = useSelector(state => state.users.user);
     let cardImage = imageNotAvailable;
     if (image) {
         cardImage = apiURL + "/uploads/" + image;
     }
     const date = moment(year_of_issue).format('YYYY');
-    console.log(published)
+
     return (
         <Card className={classes.root}>
             <CardActionArea id={id}>
@@ -55,16 +57,18 @@ const AlbumCard = ({id, title, image, year_of_issue, path, published}) => {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <NavLink exact to={`/tracks?album=${id}`} className="button-4"><span>Learn More</span></NavLink>
                 {
+                    published === true &&
+                    <NavLink exact to={`/tracks?album=${id}`} className="button-4"><span>Learn More</span></NavLink>
+                }{
                     path && path.location.pathname === "/moderation" &&
                     <>
-                        <button className="button-4"><span>Delete item</span></button>
+                        <button className="button-4" onClick={() => dispatch(deleteItem("albums",id))}><span>Delete item</span></button>
                     </>
                 }
                 {
                     user && user.role === "admin" && published !== true ?
-                        <button className="button-4"><span>Published</span></button>
+                        <button className="button-4" onClick={() => dispatch(publish("albums",id))} ><span>Published</span></button>
                         : null
                 }
             </CardActions>
