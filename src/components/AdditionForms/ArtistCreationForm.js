@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ArtistCreationForm = ({onSubmit}) => {
     const classes = useStyles();
-    const error = useSelector(state => state.music.artistError);
+    const error = useSelector(state => state.music.error);
     const [state, setState] = useState({
         name: "",
         description: "",
