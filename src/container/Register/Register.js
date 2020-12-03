@@ -12,6 +12,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {registerUser} from "../../store/actions/usersActions";
 import FormElement from "../../components/Form/FormElement";
+import FacebookLogin from "../../components/FacebookLogin/FacebookLogin";
+import FileInput from "../../components/Form/FileInput";
+import FormControl from "@material-ui/core/FormControl";
 
 
 
@@ -40,7 +43,9 @@ const Register = () => {
     const [state, setState] = useState({
         username: "",
         email: "",
-        password: ""
+        password: "",
+        avatarImage: "",
+        displayName: ""
     });
 
     const error = useSelector(state => state.users.registerError);
@@ -53,9 +58,14 @@ const Register = () => {
             return {...prevState, [name]: value};
         });
     };
+
     const formSubmitHandler = e => {
         e.preventDefault();
-        dispatch(registerUser({...state}));
+        const formData = new FormData();
+        Object.keys(state).forEach(key => {
+            formData.append(key, state[key]);
+        });
+        dispatch(registerUser(formData));
     };
 
     const getFieldError = fieldName => {
@@ -64,6 +74,13 @@ const Register = () => {
         } catch(e) {
             return undefined;
         }
+    };
+
+    const fileChangeHandler = e => {
+        const name = e.target.name;
+        const file = e.target.files[0];
+
+        setState(prevState => ({...prevState, [name]: file}));
     };
 
     return (
@@ -103,6 +120,20 @@ const Register = () => {
                             value={state.password}
                             onChange={inputChangeHandler}
                         />
+                        <FormElement
+                            error={getFieldError("displayName")}
+                            name="displayName"
+                            label="Display Name"
+                            value={state.displayName}
+                            onChange={inputChangeHandler}
+                        />
+                        <FormControl fullWidth className={classes.margin} variant="outlined">
+                            <FileInput
+                                label="Avatar Image"
+                                name="avatarImage"
+                                onChange={fileChangeHandler}
+                            />
+                        </FormControl>
                     </Grid>
                     <Button
                         type="submit"
@@ -113,6 +144,7 @@ const Register = () => {
                     >
                         Sign Up
                     </Button>
+                    <FacebookLogin/>
                     <Grid container justify="flex-end">
                         <Grid item>
                             <Link component={RouterLink} to="/login" variant="body2">

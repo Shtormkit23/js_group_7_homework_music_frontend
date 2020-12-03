@@ -13,6 +13,7 @@ import Container from '@material-ui/core/Container';
 import Alert from '@material-ui/lab/Alert';
 import {loginUser} from "../../store/actions/usersActions";
 import FormElement from "../../components/Form/FormElement";
+import FacebookLogin from "../../components/FacebookLogin/FacebookLogin";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -108,6 +109,7 @@ const Login = () => {
                     >
                         Sign In
                     </Button>
+                    <FacebookLogin/>
                     {
                         error && <Alert
                             severity="error"
