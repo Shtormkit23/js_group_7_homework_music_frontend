@@ -11,7 +11,6 @@ const NewTrack = () => {
         dispatch(fetchAlbumsSelect());
     }, [dispatch]);
 
-
     return (
         <>
             <h1>New artist</h1>
