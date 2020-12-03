@@ -1,11 +1,5 @@
 import axios from "../../axiosApi";
 import {
-    ALBUM_DELETE_FAILURE,
-    ALBUM_FETCH_SUCCESS,
-    ALBUM_PUBLISH_FAILURE,
-    ARTIST_ALBUMS_FETCH_SUCCESS,
-    ARTIST_DELETE_FAILURE, ARTIST_FETCH_SUCCESS,
-    ARTIST_PUBLISH_FAILURE, ARTIST_TRACKS_FETCH_SUCCESS,
     CREATE_ALBUM_FAILURE,
     CREATE_ALBUM_SUCCESS,
     CREATE_ARTIST_FAILURE,
@@ -58,28 +52,6 @@ const createTrackSuccess = () => {
 export const createTrackFailure = error => {
     return {type: CREATE_TRACK_FAILURE, error};
 };
-
-export const albumDeleteFailure = error => (
-    {type: ALBUM_DELETE_FAILURE, error}
-);
-
-export const albumPublishFailure = error => (
-    {type: ALBUM_PUBLISH_FAILURE, error}
-);
-
-export const artistAlbumsFetchSuccess = data => {
-    return {type: ARTIST_ALBUMS_FETCH_SUCCESS, data}
-};
-
-export const artistTracksFetchSuccess = data => ({ type: ARTIST_TRACKS_FETCH_SUCCESS, data });
-
-export const albumFetchSuccess = data => ({ type: ALBUM_FETCH_SUCCESS, data });
-
-export const artistDeleteFailure = error => ({ type: ARTIST_DELETE_FAILURE, error });
-
-export const artistPublishFailure = error => ({ type: ARTIST_PUBLISH_FAILURE, error });
-
-export const artistFetchSuccess = data => ({ type: ARTIST_FETCH_SUCCESS, data });
 
 export const fetchArtists = () => {
     return async dispatch => {
@@ -179,17 +151,6 @@ export const createTrack = trackData => {
     };
 };
 
-export const fetchAlbum = (id) => {
-    return async dispatch => {
-        try {
-            const response = await axios.get(`/albums/${id}`);
-            dispatch(albumFetchSuccess(response.data));
-        } catch (e) {
-            dispatch(fetchFailure(e));
-        }
-    };
-};
-
 export const fetchAlbumsSelect = () => {
     return async dispatch => {
         try {
@@ -210,112 +171,5 @@ export const fetchAlbumsSelect = () => {
     };
 };
 
-export const deleteAlbum = id => {
-    return async dispatch => {
-        try {
-            await axios.delete(`/albums/${id}`);
-            dispatch(push('/albums'))
-        } catch (e) {
-            if (e.response) {
-                dispatch(albumDeleteFailure(e.response.data));
-            } else {
-                dispatch(albumDeleteFailure({ global: "Network error or no internet" }));
-            }
-        }
-    };
-};
 
-export const publishAlbum = id => {
-    return async dispatch => {
-        try {
-            await axios.put(`/albums/${id}`);
-            dispatch(fetchAlbum(id))
-        } catch (e) {
-            dispatch(albumPublishFailure(e));
-        }
-    };
-};
-
-export const fetchArtistAlbums = artistId => {
-    return async dispatch => {
-        try {
-            const response = await axios.get(`/albums/?artist=${artistId}`);
-            dispatch(artistAlbumsFetchSuccess(response.data));
-        } catch (e) {
-            dispatch(fetchFailure(e));
-        }
-    };
-};
-
-export const fetchArtistTracks = artistId => {
-    return async dispatch => {
-        try {
-            const response = await axios.get(`/tracks/?artist=${artistId}`);
-            dispatch(artistTracksFetchSuccess(response.data));
-        } catch (e) {
-            dispatch(fetchFailure(e));
-        }
-    };
-};
-
-export const deleteArtistTrack = (trackId, artistId) => {
-    return async dispatch => {
-        try {
-            await axios.delete(`/tracks/${trackId}`);
-            dispatch(fetchArtistTracks(artistId));
-        } catch (e) {
-            dispatch(fetchFailure(e));
-        }
-    };
-};
-
-export const publishArtistTrack = (trackId, artistId) => {
-    return async dispatch => {
-        try {
-            await axios.put(`/tracks/${trackId}`);
-            dispatch(fetchArtistTracks(artistId));
-        } catch (e) {
-            dispatch(fetchFailure(e));
-        }
-    };
-};
-
-export const fetchArtist = (id) => {
-    return async dispatch => {
-        try {
-            const response = await axios.get(`/artists/${id}`);
-            dispatch(artistFetchSuccess(response.data));
-        } catch (e) {
-            dispatch(fetchFailure(e));
-        }
-    };
-};
-
-export const deleteArtist = id => {
-    return async (dispatch, getState) => {
-        try {
-            const token = getState().users.user.token;
-            const headers = {'Authorization': token};
-            await axios.delete(`/artists/${id}`, {headers});
-            dispatch(push('/artists'))
-        } catch (e) {
-            if (e.response) {
-                dispatch(artistDeleteFailure(e.response.data));
-            } else {
-                dispatch(artistDeleteFailure({ global: "Network error or no internet" }));
-            }
-        }
-    };
-};
-
-export const publishArtist = id => {
-    return async dispatch => {
-        try {
-            await axios.put(`/artists/${id}`);
-            dispatch(fetchArtist(id))
-        } catch (e) {
-            dispatch(artistPublishFailure(e));
-        }
-    };
-};
 
