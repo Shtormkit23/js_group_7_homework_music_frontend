@@ -17,7 +17,6 @@ const FacebookLogin = () => {
     const dispatch = useDispatch();
 
     const facebookResponse = response => {
-        console.log(response)
         if (response.id) {
             dispatch(facebookLogin(response));
         }
