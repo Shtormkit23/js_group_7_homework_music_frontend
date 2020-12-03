@@ -3,7 +3,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
 import FormElement from "../Form/FormElement";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {createTrack} from "../../store/actions/musicActions";
 
 const useStyles = makeStyles((theme) => ({
@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TrackCreationForm = ({albums}) => {
+    const error = useSelector(state => state.music.error);
     const classes = useStyles();
     const dispatch = useDispatch();
 
@@ -40,6 +41,14 @@ const TrackCreationForm = ({albums}) => {
         });
     };
 
+    const getFieldError = fieldName => {
+        try {
+            return error.errors[fieldName].message;
+        } catch(e) {
+            return undefined;
+        }
+    };
+
     return (
         <form
             className={classes.root}
@@ -48,6 +57,7 @@ const TrackCreationForm = ({albums}) => {
             onSubmit={submitFormHandler}
         >
             <FormElement
+                error={getFieldError("title")}
                 name="title"
                 label="Track title"
                 required={true}
@@ -55,6 +65,7 @@ const TrackCreationForm = ({albums}) => {
                 onChange={inputChangeHandler}
             />
             <FormElement
+                error={getFieldError("album")}
                 name="album"
                 label="Album"
                 required={true}
@@ -71,6 +82,7 @@ const TrackCreationForm = ({albums}) => {
                 onChange={inputChangeHandler}
             />
             <FormElement
+                error={getFieldError("number")}
                 name="number"
                 label="Track number"
                 required={true}

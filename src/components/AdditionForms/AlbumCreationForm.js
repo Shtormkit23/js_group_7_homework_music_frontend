@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AlbumCreationForm = ({onSubmit, artists}) => {
     const classes = useStyles();
-    const error = useSelector(state => state.music.artistError);
+    const error = useSelector(state => state.music.error);
     const [state, setState] = useState({
         title: "",
         artist: "",
@@ -73,6 +73,7 @@ const AlbumCreationForm = ({onSubmit, artists}) => {
                 onChange={inputChangeHandler}
             />
             <FormElement
+                error={getFieldError("artists")}
                 name="artist"
                 label="Artist"
                 required={true}
