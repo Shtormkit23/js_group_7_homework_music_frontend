@@ -71,7 +71,7 @@ const TrackCard = ({id,title,duration,number, path, published}) => {
                                     <p className={classes.duration}>{duration}</p>
                                     <Grid className={classes.buttonsBlock}>
                                     {user &&
-                                        <button className="button-4" onClick={() => dispatch(addTrackToHistory(id))}><span>Add Track To History</span></button>
+                                        <button className="button-4" onClick={() => dispatch(addTrackToHistory(id))} id="addTrackToHistory"><span>Add Track To History</span></button>
                                     }
                                     {
                                         user && user.role === "admin" && published !== true ?

@@ -55,7 +55,7 @@ const ArtistCard = ({id, name, image, published, path})   => {
             <CardActions>
                 {
                     published === true &&
-                    <NavLink exact to={`/albums?artist=${id}`}  className="button-4"><span>Learn More</span></NavLink>
+                    <NavLink exact to={`/albums?artist=${id}`}  className="button-4" id="learnMoreArtist"><span>Learn More</span></NavLink>
                 }
                 {
                     path && path.location.pathname === "/moderation" && user && user.role === "admin" &&

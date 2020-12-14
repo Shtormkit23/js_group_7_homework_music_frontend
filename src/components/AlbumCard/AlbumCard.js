@@ -59,7 +59,7 @@ const AlbumCard = ({id, title, image, year_of_issue, path, published}) => {
             <CardActions>
                 {
                     published === true &&
-                    <NavLink exact to={`/tracks?album=${id}`} className="button-4"><span>Learn More</span></NavLink>
+                    <NavLink exact to={`/tracks?album=${id}`} className="button-4" id="learnMoreAlbum"><span>Learn More</span></NavLink>
                 }{
                     path && path.location.pathname === "/moderation" &&
                     <>
