@@ -136,6 +136,7 @@ const Register = () => {
                         </FormControl>
                     </Grid>
                     <Button
+                        id="registerBtn"
                         type="submit"
                         fullWidth
                         variant="contained"

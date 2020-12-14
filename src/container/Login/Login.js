@@ -101,6 +101,7 @@ const Login = () => {
                         />
                     </Grid>
                     <Button
+                        id="loginBtn"
                         type="submit"
                         fullWidth
                         variant="contained"
