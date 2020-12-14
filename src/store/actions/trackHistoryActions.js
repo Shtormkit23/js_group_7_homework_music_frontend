@@ -1,5 +1,6 @@
 import {ADD_TRACK_TO_HISTORY_SUCCESS, ADD_TRACK_TO_HISTORY_FAILURE, FETCH_TRACK_HISTORY_SUCCESS, FETCH_TRACK_HISTORY_FAILURE } from "../actionTypes";
 import axios from "../../axiosApi";
+import {push} from "connected-react-router";
 
 export const addTrackToHistorySuccess = track => ({ type: ADD_TRACK_TO_HISTORY_SUCCESS, track });
 export const addTrackToHistoryFailure = error => ({ type: ADD_TRACK_TO_HISTORY_FAILURE, error });
@@ -15,6 +16,7 @@ export const addTrackToHistory = track => {
             }
             const response = await axios.post('/track_history', {track}, {headers});
             dispatch(addTrackToHistorySuccess(response.data));
+            dispatch(push("/"));
         } catch (e) {
             dispatch(addTrackToHistoryFailure(e.response.data))
         }

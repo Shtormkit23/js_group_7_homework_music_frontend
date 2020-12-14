@@ -97,8 +97,8 @@ const AlbumCreationForm = ({onSubmit, artists}) => {
                     onChange={fileChangeHandler}
                 />
             </FormControl>
-            <FormControl fullWidth className={classes.margin} variant="outlined">
-                <Button type="submit" color="primary">Create</Button>
+            <FormControl fullWidth className={classes.margin} variant="outlined" >
+                <Button type="submit" color="primary" id="createAlbum">Create</Button>
             </FormControl>
         </form>
     );

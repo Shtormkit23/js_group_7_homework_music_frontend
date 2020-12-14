@@ -92,7 +92,7 @@ const TrackCreationForm = ({albums}) => {
                 onChange={inputChangeHandler}
             />
             <FormControl fullWidth className={classes.margin} variant="outlined">
-                <Button type="submit" color="primary">Create</Button>
+                <Button type="submit" color="primary" id="createTrack">Create</Button>
             </FormControl>
         </form>
     );

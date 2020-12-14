@@ -88,7 +88,13 @@ const ArtistCreationForm = ({onSubmit}) => {
                 />
             </FormControl>
             <FormControl fullWidth className={classes.margin} variant="outlined">
-                <Button type="submit" color="primary">Create</Button>
+                <Button
+                    id="createArtist"
+                    type="submit"
+                    color="primary"
+                >
+                    Create
+                </Button>
             </FormControl>
         </form>
     );
