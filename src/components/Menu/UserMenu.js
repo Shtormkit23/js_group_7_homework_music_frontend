@@ -49,6 +49,7 @@ const UserMenu = ({user}) => {
                 <Avatar src={avatarImage} />
             </ListItemAvatar>
             <Button
+                id="userMenu"
                 aria-controls="simple-menu"
                 aria-haspopup="true"
                 onClick={handleClick}
@@ -64,7 +65,7 @@ const UserMenu = ({user}) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem><NavLink to="/new_artist">Add artist</NavLink></MenuItem>
+                <MenuItem><NavLink id="newArtist" to="/new_artist">Add artist</NavLink></MenuItem>
                 <MenuItem><NavLink to="/new_album">Add album</NavLink></MenuItem>
                 <MenuItem><NavLink to="/new_track">Add track</NavLink></MenuItem>
                 {
