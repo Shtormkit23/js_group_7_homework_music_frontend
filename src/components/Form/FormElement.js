@@ -8,7 +8,7 @@ const FormElement = ({name, label, value, onChange, required, error, type, selec
     let inputChildren = null;
     if(options) {
         inputChildren = options.map((option) => (
-            <MenuItem key={option._id} value={option._id}>
+            <MenuItem key={option._id} value={option._id} id={option.title ? option.title : option.name} >
                 {option.title ? option.title : option.name}
             </MenuItem>
         ))
